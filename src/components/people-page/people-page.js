@@ -3,6 +3,7 @@ import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import ErrorIndicator from "../error-indicator/error-indicator";
 import SwapiService from "../../services/swapi-service";
+import ErrorBoundry from "../error-boundry/error-boundry";
 
 const Row = ({left, right}) => {
     return (
@@ -23,17 +24,12 @@ export default class PeoplePage extends Component {
 
     state = {
         selectedPerson: null,
-        hasError: false,
     }
 
     onPersonSelected = (id) => {
         this.setState({
             selectedPerson: id
         })
-    }
-
-    componentDidCatch(error, info) {
-        this.setState({ hasError: true })
     }
 
     render() {
@@ -52,7 +48,9 @@ export default class PeoplePage extends Component {
         />)
 
         const personDetails = (
-            <PersonDetails personId={this.state.selectedPerson}/>
+            <ErrorBoundry>
+                <PersonDetails personId={this.state.selectedPerson}/>
+            </ErrorBoundry>
         )
 
         return (
