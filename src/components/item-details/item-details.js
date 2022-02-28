@@ -4,11 +4,11 @@ import Spinner from '../spinner';
 
 import './item-details.css';
 
-const Record = ({ field, label }) => {
+const Record = ({ item, field, label }) => {
   return (
     <li className="list-group-item">
       <span className="term">{ label }</span>
-      <span>{ field }</span>
+      <span>{ item[field] }</span>
     </li>
   )
 }
@@ -29,9 +29,13 @@ export default class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.itemId !== prevProps.itemId) {
+    if (this.state.item !== prevProps.item) {
       this.updateItem()
     }
+  }
+
+  componentDidCatch() {
+    return <ErrorIndicator/>
   }
 
   updateItem() {
@@ -45,36 +49,36 @@ export default class ItemDetails extends Component {
         image: getImageUrl(item),
       })}
     )
-    .catch(this.onError)
+    .catch(this.updateItem)
   }
 
-  layoutItem() {
-    const { id, name, gender, birthYear, eyeColor } = this.state.item;
+  // layoutItem() {
+  //   const { id, name, gender, birthYear, eyeColor } = this.state.item;
 
-    return (
-      <>
-        <img className="item-image"
-          src={this.state.image} />
-        <div className="card-body">
-          <h4>{ name }</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{ gender }</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{ birthYear }</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{ eyeColor }</span>
-            </li>
-          </ul>
-        </div>
-      </>
-    )
-  }
+  //   return (
+  //     <>
+  //       <img className="item-image"
+  //         src={this.state.image} />
+  //       <div className="card-body">
+  //         <h4>{ name }</h4>
+  //         <ul className="list-group list-group-flush">
+  //           <li className="list-group-item">
+  //             <span className="term">Gender</span>
+  //             <span>{ gender }</span>
+  //           </li>
+  //           <li className="list-group-item">
+  //             <span className="term">Birth Year</span>
+  //             <span>{ birthYear }</span>
+  //           </li>
+  //           <li className="list-group-item">
+  //             <span className="term">Eye Color</span>
+  //             <span>{ eyeColor }</span>
+  //           </li>
+  //         </ul>
+  //       </div>
+  //     </>
+  //   )
+  // }
 
   render() {
     const { item, image } = this.state;
@@ -95,7 +99,7 @@ export default class ItemDetails extends Component {
           <ul className="list-group list-group-flush">
             { 
               React.Children.map(this.props.children, (child) => {
-                return child
+                return React.cloneElement(child, { item })
               }) 
             }
           </ul>

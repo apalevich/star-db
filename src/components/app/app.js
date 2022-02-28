@@ -29,10 +29,13 @@ export default class App extends Component {
   render() { 
     const planet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
     const { getPerson, getStarship, getPersonImage, getStarshipImage } = this.swapiService;
+    
+    const randomId = Math.floor(Math.random() * 25);
+    console.log(randomId)
 
     const personDetails = (
       <ItemDetails
-        itemId={4}
+        itemId={randomId}
         getData={getPerson}
         getImageUrl={getPersonImage}>
 
@@ -43,10 +46,14 @@ export default class App extends Component {
 
     const starshipDetails = (
       <ItemDetails
-        itemId={5}
+        itemId={randomId}
         getData={getStarship}
-        getImageUrl={getStarshipImage}
-      />
+        getImageUrl={getStarshipImage}>
+
+        <Record field="model" label="Model" />
+        <Record field="length" label="Lenght" />
+        <Record field="costInCredits" label="Cost" />
+      </ItemDetails>
     );
 
     return (
