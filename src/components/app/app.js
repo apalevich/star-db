@@ -5,8 +5,8 @@ import RandomPlanet from '../random-planet';
 import ErrorButton from '../error-button/error-button.js';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundry from '../error-boundry/error-boundry';
-import ItemDetails from '../item-details';
-import Row from '../row/row';
+import ItemDetails, { Record } from '../item-details';
+import Row from '../row';
 
 import './app.css';
 
@@ -27,17 +27,18 @@ export default class App extends Component {
   }
 
   render() { 
-
     const planet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
-
     const { getPerson, getStarship, getPersonImage, getStarshipImage } = this.swapiService;
 
     const personDetails = (
       <ItemDetails
-        itemId={11}
+        itemId={4}
         getData={getPerson}
-        getImageUrl={getPersonImage}
-      />
+        getImageUrl={getPersonImage}>
+
+          <Record field="gender" label="Gender" />
+          <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     );
 
     const starshipDetails = (
@@ -51,15 +52,17 @@ export default class App extends Component {
     return (
       <ErrorBoundry>
         <Header />
-        { planet }
-        <div className="mb2 button-row">
-          <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}>
-                Toggle Random Planet
-          </button>
-          <ErrorButton />
-        </div>
+        <ErrorBoundry>
+          { planet }
+          <div className="mb2 button-row">
+            <button
+                className="toggle-planet btn btn-warning btn-lg"
+                onClick={this.toggleRandomPlanet}>
+                  Toggle Random Planet
+            </button>
+            <ErrorButton />
+          </div>
+        </ErrorBoundry>
 
         <Row
             left={personDetails}
