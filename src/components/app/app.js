@@ -60,13 +60,10 @@ export default class App extends Component {
         <StarshipDetails itemId={randomId}/>
 
         <PersonList>
-          {({name}) => { return <span>{name}</span>}}  
         </PersonList>
         <StarshipList>
-          {({name}) => { return <span>{name}</span>}}  
         </StarshipList>
         <PlanetList>
-          {({name}) => { return <span>{name}</span>}}  
         </PlanetList>
 
       </ErrorBoundry>
