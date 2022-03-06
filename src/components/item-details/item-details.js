@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import ErrorIndicator from '../error-indicator/error-indicator';
-import Spinner from '../spinner';
 
 import './item-details.css';
+
+
+const normalizeValue = (value) => {
+  return value.slice(0,1).toUpperCase() + value.slice(1)
+}
 
 const Record = ({ item, field, label }) => {
   return (
     <li className="list-group-item">
       <span className="term">{ label }</span>
-      <span>{ item[field] }</span>
+      <span>{ normalizeValue(item[field]) }</span>
     </li>
   )
 }
 
-export {
-  Record
-};
-
 export default class ItemDetails extends Component {
-
   state = {
     item: null,
     image: null
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     this.updateItem()
   }
 
@@ -108,3 +107,5 @@ export default class ItemDetails extends Component {
     )
   }
 }
+
+export { Record }

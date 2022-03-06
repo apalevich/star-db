@@ -5,11 +5,17 @@ import RandomPlanet from '../random-planet';
 import ErrorButton from '../error-button/error-button.js';
 import SwapiService from '../../services/swapi-service';
 import ErrorBoundry from '../error-boundry/error-boundry';
-import ItemDetails, { Record } from '../item-details';
-import Row from '../row';
 
 import './app.css';
-import ItemList from '../item-list/item-list';
+
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails
+} from '../sw-components';
 
 const swapiService = new SwapiService()
 
@@ -34,29 +40,6 @@ export default class App extends Component {
     const randomId = Math.floor(Math.random() * 25);
     console.log(randomId)
 
-    const personDetails = (
-      <ItemDetails
-        itemId={randomId}
-        getData={getPerson}
-        getImageUrl={getPersonImage}>
-
-          <Record field="gender" label="Gender" />
-          <Record field="eyeColor" label="Eye Color" />
-      </ItemDetails>
-    );
-
-    const starshipDetails = (
-      <ItemDetails
-        itemId={randomId}
-        getData={getStarship}
-        getImageUrl={getStarshipImage}>
-
-        <Record field="model" label="Model" />
-        <Record field="length" label="Lenght" />
-        <Record field="costInCredits" label="Cost" />
-      </ItemDetails>
-    );
-
     return (
       <ErrorBoundry>
         <Header />
@@ -72,15 +55,19 @@ export default class App extends Component {
           </div>
         </ErrorBoundry>
 
-        <ItemList
-          getData={swapiService.getAllPeople}>
-          { ({name}) => {return <span>{ name }</span>} }
-        </ItemList>
+        <PersonDetails itemId={randomId}/>
+        <PlanetDetails itemId={randomId}/>
+        <StarshipDetails itemId={randomId}/>
 
-        <ItemList
-          getData={swapiService.getAllStaships}>
-          { ({name}) => {return <span>{ name }</span>} }
-        </ItemList>
+        <PersonList>
+          {({name}) => { return <span>{name}</span>}}  
+        </PersonList>
+        <StarshipList>
+          {({name}) => { return <span>{name}</span>}}  
+        </StarshipList>
+        <PlanetList>
+          {({name}) => { return <span>{name}</span>}}  
+        </PlanetList>
 
       </ErrorBoundry>
     );
