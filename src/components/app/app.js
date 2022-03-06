@@ -9,10 +9,11 @@ import ItemDetails, { Record } from '../item-details';
 import Row from '../row';
 
 import './app.css';
+import ItemList from '../item-list/item-list';
+
+const swapiService = new SwapiService()
 
 export default class App extends Component {
-
-  swapiService = new SwapiService();
 
   state = {
     showRandomPlanet: true
@@ -28,7 +29,7 @@ export default class App extends Component {
 
   render() { 
     const planet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
-    const { getPerson, getStarship, getPersonImage, getStarshipImage } = this.swapiService;
+    const { getPerson, getStarship, getPersonImage, getStarshipImage } = swapiService;
     
     const randomId = Math.floor(Math.random() * 25);
     console.log(randomId)
@@ -71,10 +72,15 @@ export default class App extends Component {
           </div>
         </ErrorBoundry>
 
-        <Row
-            left={personDetails}
-            right={starshipDetails}
-        />
+        <ItemList
+          getData={swapiService.getAllPeople}>
+          { ({name}) => {return <span>{ name }</span>} }
+        </ItemList>
+
+        <ItemList
+          getData={swapiService.getAllStaships}>
+          { ({name}) => {return <span>{ name }</span>} }
+        </ItemList>
 
       </ErrorBoundry>
     );
