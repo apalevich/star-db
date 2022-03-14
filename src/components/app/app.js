@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorButton from '../error-button/error-button.js';
-import SwapiService from '../../services/swapi-service';
 import ErrorBoundry from '../error-boundry/error-boundry';
+
+import SwapiService from '../../services/swapi-service';
+import DummySwapiService from '../../services/dummy-swapi-service';
+import { SwapiServiceProvider } from '../swapi-service-context';
 
 import './app.css';
 
@@ -17,7 +20,8 @@ import {
   StarshipDetails
 } from '../sw-components';
 
-const swapiService = new SwapiService()
+const swapiService = new SwapiService();
+const dummySwapiService = new DummySwapiService();
 
 export default class App extends Component {
 
@@ -35,37 +39,34 @@ export default class App extends Component {
 
   render() { 
     const planet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
-    const { getPerson, getStarship, getPersonImage, getStarshipImage } = swapiService;
     
     const randomId = Math.floor(Math.random() * 25);
     console.log(randomId)
 
     return (
       <ErrorBoundry>
-        <Header />
-        <ErrorBoundry>
-          { planet }
-          <div className="mb2 button-row">
-            <button
-                className="toggle-planet btn btn-warning btn-lg"
-                onClick={this.toggleRandomPlanet}>
-                  Toggle Random Planet
-            </button>
-            <ErrorButton />
-          </div>
-        </ErrorBoundry>
+        <SwapiServiceProvider value={swapiService}>
+          <Header />
+          <ErrorBoundry>
+            { planet }
+            <div className="mb2 button-row">
+              <button
+                  className="toggle-planet btn btn-warning btn-lg"
+                  onClick={this.toggleRandomPlanet}>
+                    Toggle Random Planet
+              </button>
+              <ErrorButton />
+            </div>
+          </ErrorBoundry>
 
-        <PersonDetails itemId={randomId}/>
-        <PlanetDetails itemId={randomId}/>
-        <StarshipDetails itemId={randomId}/>
+          <PersonDetails itemId={randomId}/>
+          <PlanetDetails itemId={randomId}/>
+          <StarshipDetails itemId={randomId}/>
 
-        <PersonList>
-        </PersonList>
-        <StarshipList>
-        </StarshipList>
-        <PlanetList>
-        </PlanetList>
-
+          <PersonList />
+          <StarshipList/>
+          <PlanetList />
+        </SwapiServiceProvider>
       </ErrorBoundry>
     );
   }
