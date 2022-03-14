@@ -2,7 +2,8 @@ import React from 'react';
 
 import './header.css';
 
-const Header = () => {
+const Header = ({onButtonClick, showRandomPlanet}) => {
+  const buttonLabel = showRandomPlanet ? 'Hide Random Planet' : 'Show Random Planet'
   return (
     <div className="header d-flex">
       <h3>
@@ -20,6 +21,11 @@ const Header = () => {
         <li>
           <a href="#">Starships</a>
         </li>
+        <button
+            className='btn btn-primary btn-sm'
+            onClick={onButtonClick}>
+          { buttonLabel }
+        </button>
       </ul>
     </div>
   );
