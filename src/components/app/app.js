@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ErrorButton from '../error-button/error-button.js';
+import { PeoplePage, PlanetPage, StarshipPage  } from '../pages';
 import ErrorBoundry from '../error-boundry/error-boundry';
 import Row from '../row';
 
@@ -52,13 +52,10 @@ export default class App extends Component {
             { planet }
           </ErrorBoundry>
 
-          <PersonDetails itemId={randomId}/>
-          <PlanetDetails itemId={randomId}/>
-          <StarshipDetails itemId={randomId}/>
-
-          <PersonList />
-          <StarshipList/>
-          <PlanetList />
+          <PeoplePage/>
+          <PlanetPage/>
+          <StarshipPage/>
+          
         </SwapiServiceProvider>
       </ErrorBoundry>
     );
