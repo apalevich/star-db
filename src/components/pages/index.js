@@ -1,5 +1,5 @@
 import PeoplePage from "./people-page";
-import StarshipPage from "./planet-page";
+import StarshipPage from "./starship-page";
 import PlanetPage from "./planet-page";
 
 export {

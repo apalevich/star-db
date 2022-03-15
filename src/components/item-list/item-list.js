@@ -9,7 +9,7 @@ const ItemList = (props) => {
 
   const items = data.map((item) => {
     const { id } = item;
-    console.dir(item.name);
+
     const label = renderLabel(item);
 
     return (

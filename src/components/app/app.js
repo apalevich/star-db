@@ -4,7 +4,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorBoundry from '../error-boundry/error-boundry';
 
-import { PeoplePage, PlanetPage, StarshipPage  } from '../pages';
+import { PeoplePage, StarshipPage, PlanetPage  } from '../pages';
 import SwapiService from '../../services/swapi-service';
 import { SwapiServiceProvider } from '../swapi-service-context';
 
@@ -43,8 +43,8 @@ export default class App extends Component {
           </ErrorBoundry>
 
           <PeoplePage/>
-          <PlanetPage/>
           <StarshipPage/>
+          <PlanetPage/>
           
         </SwapiServiceProvider>
       </ErrorBoundry>
