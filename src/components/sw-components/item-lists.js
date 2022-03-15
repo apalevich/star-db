@@ -1,34 +1,52 @@
 import React from "react"
 import ItemList from "../item-list"
-import { withData } from "../hoc-helpers"
-import SwapiService from "../../services/swapi-service"
+import { withData, withSwapiService } from "../hoc-helpers"
 
-const { getAllPeople, getAllPlanets, getAllStarships  } = new SwapiService()
-
-const withChildren = (Wrapped, renderFn) => {
+const withChildFunction = (Wrapped, renderFn) => {
   return (props) => {
     return (
       <Wrapped {...props}>
         { renderFn }
       </Wrapped>
     )
-  }
-}
+  };
+};
 
 const renderName = ({name}) => <span>{name}</span>
 const renderNameAndModel = ({name, model}) => <span>{name}&nbsp;<sub>({model})</sub></span>
 
-const PersonList = withData(
-                          withChildren(ItemList, renderName),
-                          getAllPeople)
+const mapPersonMethodsToProps = (swapiService) => {
+  return {
+    getData: swapiService.getAllPeople
+  };
+};
 
-const PlanetList = withData(
-                          withChildren(ItemList, renderName),
-                          getAllPlanets)
+const mapPlanetMethodsToProps = (swapiService) => {
+  return {
+    getData: swapiService.getAllPlanets
+  };
+};
 
-const StarshipList = withData(
-                          withChildren(ItemList, renderNameAndModel),
-                          getAllStarships)
+const mapStarshipMethodsToProps = (swapiService) => {
+  return {
+    getData: swapiService.getAllStarships
+  };
+};
+
+const PersonList = withSwapiService(
+                        withData(
+                          withChildFunction(ItemList, renderName)),
+                      mapPersonMethodsToProps);
+
+const PlanetList =  withSwapiService(
+                        withData(
+                          withChildFunction(ItemList, renderName)),
+                      mapPlanetMethodsToProps);
+
+const StarshipList = withSwapiService(
+                          withData(
+                            withChildFunction(ItemList, renderNameAndModel)),
+                      mapStarshipMethodsToProps);
 
 export {
     PersonList,

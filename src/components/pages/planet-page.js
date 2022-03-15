@@ -9,11 +9,15 @@ export default class PlanetPage extends Component {
     selectedItem: null
   }
 
+  onItemSelected = (selectedItem) => {
+    this.setState({ selectedItem });
+  };
+
   render() {
     return (
       <Row
-        left={<PlanetList />}
-        right={<PlanetDetails itemId={9}/>}
+        left={<PlanetList onItemSelected={this.onItemSelected} />}
+        right={<PlanetDetails itemId={this.state.selectedItem}/>}
       />
     )
   }

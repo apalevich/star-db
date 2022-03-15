@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ErrorIndicator from "../error-indicator/error-indicator";
 import Spinner from '../spinner';
 
-const withData = (View, getData) => {
+const withData = (View) => {
     return class extends Component {
         state = {
             data: null,
@@ -10,33 +10,28 @@ const withData = (View, getData) => {
         }
 
         componentDidMount() {
-            getData()
-            .then((data) => {
-                this.setState({
-                    data
-                });
-            })
-            .catch((error) => {
-                this.setState({
-                    error: true
-                });
-            })
+          this.update()
         }
 
-        renderItems(arr) {
-            return arr.map((item) => {
-              const {id} = item;
-              const label = this.props.renderItems(item);
-        
-              return (
-                <li className="list-group-item"
-                    key={id}
-                    onClick={() => {this.props.onItemSelected(id)}}
-                >
-                  { label }
-                </li>
-              )
-            })
+        componentDidUpdate(prevProps) {
+          if (this.props.getData !== prevProps.getData) {
+            this.update()
+          }
+        }
+
+        update() {
+          this.props.getData()
+          .then((data) => {
+              this.setState({
+                  data,
+                  error: false
+              });
+          })
+          .catch((error) => {
+              this.setState({
+                  error: true
+              });
+          })
         }
 
         render() {
@@ -50,4 +45,4 @@ const withData = (View, getData) => {
     }
 }
 
-export default withData
+export default withData;
