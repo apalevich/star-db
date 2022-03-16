@@ -7,35 +7,47 @@ import './random-planet.css';
 
 export default class RandomPlanet extends Component {
 
+  static defaultProps = {
+    updateInterval: 7000
+  };
+
   swapiService = new SwapiService();
 
   state = {
     planet: {},
     loading: true,
     hasError: false
-  }
+  };
 
   componentDidMount() {
     this.updatePlanet();
+    this.interval = setInterval(() => {this.updatePlanet()}, this.props.updateInterval);
   }
 
   onPlanetLoaded = (planet) => {
     this.setState({
       planet,
       loading: false
-    })
-  }
+    });
+  };
 
   componentDidCatch() {
     this.setState({
       loading: false,
       hasError: true
     })
-  }
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  };
 
   updatePlanet() {
+    this.setState({
+      loading: true
+    });
     const id = Math.ceil(Math.random()*21);
-    
+
     this.swapiService
     .getPlanet(id)
     .then(this.onPlanetLoaded)
