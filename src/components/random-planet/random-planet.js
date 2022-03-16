@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import SwapiService from '../../services/swapi-service.js'
 import Spinner from '../spinner/spinner.js';
 import ErrorIndicator from '../error-indicator/error-indicator.js';
@@ -10,6 +12,10 @@ export default class RandomPlanet extends Component {
   static defaultProps = {
     updateInterval: 7000
   };
+
+  static propTypes = {
+    updateInterval: PropTypes.number
+  }
 
   swapiService = new SwapiService();
 
