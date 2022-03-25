@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -30,22 +31,25 @@ export default class App extends Component {
     const { showRandomPlanet } = this.state;
     const randomId = Math.floor(Math.random() * 25);
 
-    const planet = this.state.showRandomPlanet ? <RandomPlanet/> : null;
+    const planet = this.state.showRandomPlanet ? <RandomPlanet updateInterval={30000}/> : null;
 
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={swapiService}>
-          <Header
-              onButtonClick={this.toggleRandomPlanet}
-              showRandomPlanet={showRandomPlanet}/>
-          <ErrorBoundry>
-            { planet }
-          </ErrorBoundry>
+          <Router>
 
-          <PeoplePage/>
-          <StarshipPage/>
-          <PlanetPage/>
-          
+            <Header
+                onButtonClick={this.toggleRandomPlanet}
+                showRandomPlanet={showRandomPlanet}/>
+            <ErrorBoundry>
+              { planet }
+            </ErrorBoundry>
+
+            <Route path='/people' component={PeoplePage}/>
+            <Route path='/starship' component={StarshipPage}/>
+            <Route path='/planet' component={PlanetPage}/>
+
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundry>
     );
