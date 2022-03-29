@@ -20,6 +20,12 @@ const Header = ({onButtonClick, showRandomPlanet}) => {
         <li>
           <Link to="/starships/">Starships</Link>
         </li>
+        <li>
+          <Link to="/login/">Login</Link>
+        </li>
+        <li>
+          <Link to="/secret/">Secret Page</Link>
+        </li>
         <button
             className='btn btn-primary btn-sm'
             onClick={onButtonClick}>
