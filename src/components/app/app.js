@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -53,28 +53,35 @@ export default class App extends Component {
               { planet }
             </ErrorBoundry>
 
-            <Route path='/' exact render={() => <h2>Welcome to StarDB</h2>}/>
-            <Route path='/people/:id?' exact component={PeoplePage}/>
-            <Route path='/planets' exact component={PlanetPage}/>
-            <Route path='/starships' exact component={StarshipPage}/>
-            <Route path='/starships/:id' render={({ match }) => {
-              const { id } = match.params;
-              return <StarshipDetails itemId={id}/>
-            }}/>
-            <Route path="/login" render={() => {
-              return (<LoginMockup
-                isLogged={this.state.isLogged}
-                onLogin={this.onLogin}
-              />)
-            }}/>
-            <Route
-              path="/secret"
-              render={()=>{
-                return (
-                  <SecretContent isLogged={this.state.isLogged}/>
-                )
+            <Switch>
+              <Route path='/' exact render={() => <h2>Welcome to StarDB</h2>}/>
+              <Route path='/people/:id?' exact component={PeoplePage}/>
+              <Route path='/planets' exact component={PlanetPage}/>
+              <Route path='/starships' exact component={StarshipPage}/>
+              <Route path='/starships/:id' render={({ match }) => {
+                const { id } = match.params;
+                return <StarshipDetails itemId={id}/>
               }}/>
-
+              <Route path="/login" render={() => {
+                return (<LoginMockup
+                  isLogged={this.state.isLogged}
+                  onLogin={this.onLogin}
+                />)
+              }}/>
+              <Route
+                path="/secret"
+                render={()=>{
+                  return (
+                    <SecretContent isLogged={this.state.isLogged}/>
+                  )
+                }}/>
+              <Route render={()=>{return (
+                <div>
+                  <h2>You Lost</h2>
+                  <em>Here is your teleport to <a href="/">HOME</a></em>
+                </div>
+              )}}/>
+            </Switch>
           </Router>
         </SwapiServiceProvider>
       </ErrorBoundry>
