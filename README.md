@@ -1,1 +1,1 @@
-Study project using React and Fetch API
+React-based Star Wars database
