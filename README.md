@@ -13,6 +13,20 @@ This project leverages several key features and approaches of React:
 - **React Router**: React Router is used for client-side routing, enabling navigation between different views of the application.
 - **PropTypes**: PropTypes are used for type-checking of props, ensuring that components receive the correct data types.
 
+## Libraries and Versions
+
+The project uses the following libraries:
+
+- **React**: ^17.0.2
+- **React DOM**: ^17.0.2
+- **React Router DOM**: ^5.3.0
+- **PropTypes**: ^15.8.1
+- **React Scripts**: 5.0.0
+- **@testing-library/jest-dom**: ^5.16.1
+- **@testing-library/react**: ^12.1.2
+- **@testing-library/user-event**: ^13.5.0
+- **Web Vitals**: ^2.1.4
+
 ## Running the Project Locally
 
 To run this project locally, follow these steps:
